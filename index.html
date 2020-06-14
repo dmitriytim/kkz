@@ -1,0 +1,189 @@
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+
+<style type="text/css">
+<!--
+		
+.styl_1 {font-family:Verdana; font-size:15px; color:darkblue; font-weight:bold; } 
+
+.styl_2 {font-family:Verdana; font-size:30px; color:darkred; font-weight:bold; } 
+
+
+.styl_okno_1 {font-family:Verdana; font-size:15px; color:darkgreen; font-weight:bold;
+              width:300px; height:30px; text-align:center; } 
+			   
+.styl_przycisk_1 {font-family:Verdana; font-size:15px; color:darkblue; font-weight:normal;
+                  width:100px; height:30px; } 		
+.td {
+    width: 50%;
+    float: left;
+}
+.tr {
+    clear: both;
+}
+button {
+    background-size: 100%;
+    width: 150px;
+    border-radius: 15px;
+    height: 100px;
+    border: none;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 52px;
+}
+-->
+</style>
+
+</head>
+
+
+
+<body style="background-color:#eeeeee; ">
+<center>
+
+
+
+<br>
+
+<form name="formularz1" action="">
+
+<font class="styl_1">Kontynent</font>
+
+<select class="styl_okno_1" name="kontynenty" onchange="aktualizuj();">
+
+<select>
+
+<br><br>
+
+<font class="styl_1">Państwo</font>
+
+<select class="styl_okno_1" name="panstwa" onchange="loadSubdadefromCountry();">
+
+</select>
+
+<div>
+<div class='td' ><img name="flag" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/125px-Flag_of_Poland.svg.png" width="300px"/></div>
+<div class='td' ><img name="lesser" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Herb_Polski.svg/85px-Herb_Polski.svg.png" width="200px"/></div>
+</div>
+
+
+<div class='tr'><button name="btn" type="reset" onclick="gotowiki();return false;">Wiki</button></div>
+
+</form>
+
+
+
+<script type="text/javascript">
+
+var kontynenty_nazwy = new Array('Europa','Azja','Ameryka Północna','Afryka','Australia i Oceania','Ameryka Południowa');
+
+var panstwa_nazwy = new Array(kontynenty_nazwy.length);
+var panstwa_data = new Array(kontynenty_nazwy.length);
+
+panstwa_nazwy[0]= new Array ('Polska','Rosja','Ukraina');
+panstwa_nazwy[1]= new Array ('Chińska Republika Ludowa','Japonia','Indie');
+panstwa_nazwy[2]= new Array ('USA','Kanada','Dominika');
+panstwa_nazwy[3]= new Array ('Egipt','Tunezja','Sierra Leone');
+panstwa_nazwy[4]= new Array ('Australia','Nowa Zelandia','Indonezja');
+panstwa_nazwy[5]= new Array ('Brazylia','Argentyna','Kolumbia');
+
+
+
+
+
+panstwa_data[0]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/125px-Flag_of_Poland.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Herb_Polski.svg/85px-Herb_Polski.svg.png'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/125px-Flag_of_Russia.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/85px-Coat_of_Arms_of_the_Russian_Federation.svg.png'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg','https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/170px-Lesser_Coat_of_Arms_of_Ukraine.svg.png'));
+panstwa_data[1]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/250px-Flag_of_the_People%27s_Republic_of_China.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/National_Emblem_of_the_People%27s_Republic_of_China.svg/170px-National_Emblem_of_the_People%27s_Republic_of_China.svg.png'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/250px-Flag_of_Japan.svg.png','https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Imperial_Seal_of_Japan.svg/170px-Imperial_Seal_of_Japan.svg.png'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg','https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg'));
+panstwa_data[2]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg','https://upload.wikimedia.org/wikipedia/commons/5/5c/Great_Seal_of_the_United_States_%28obverse%29.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg','https://upload.wikimedia.org/wikipedia/commons/c/c5/Coat_of_arms_of_Canada_rendition.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/c/c4/Flag_of_Dominica.svg','https://upload.wikimedia.org/wikipedia/commons/2/26/Coat-of-arms-of-Dominica.svg'));
+panstwa_data[3]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg','https://upload.wikimedia.org/wikipedia/commons/5/5e/Coat_of_arms_of_Egypt.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg','https://upload.wikimedia.org/wikipedia/commons/8/80/Coat_of_arms_of_Tunisia.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Sierra_Leone.svg','https://upload.wikimedia.org/wikipedia/commons/3/3f/Coat_of_arms_of_Sierra_Leone.svg'));
+panstwa_data[4]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg','https://upload.wikimedia.org/wikipedia/commons/f/f8/Coat_of_Arms_of_Australia.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg','https://upload.wikimedia.org/wikipedia/commons/d/d3/Coat_of_arms_of_New_Zealand.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg','https://upload.wikimedia.org/wikipedia/commons/9/90/National_emblem_of_Indonesia_Garuda_Pancasila.svg'));
+panstwa_data[5]= new Array (
+new Array ('https://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Brazil.svg','https://upload.wikimedia.org/wikipedia/commons/b/bf/Coat_of_arms_of_Brazil.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg','https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg'),
+new Array ('https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg','https://upload.wikimedia.org/wikipedia/commons/e/ef/Coat_of_arms_of_Colombia.svg'));
+
+var wiki ="https://pl.wikipedia.org/wiki/";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function aktualizuj()
+  {
+  
+  
+  
+  //alert(document.formularz1.kontynenty.value);
+   document.formularz1.panstwa.options.length=panstwa_nazwy[document.formularz1.kontynenty.value].length;
+   for (i=1; i<=panstwa_nazwy[document.formularz1.kontynenty.value].length; i++)
+     {document.formularz1.panstwa.options[i-1].text=panstwa_nazwy[document.formularz1.kontynenty.value][i-1];
+      document.formularz1.panstwa.options[i-1].value=i-1; 
+     }
+    loadSubdadefromCountry();
+  }
+  
+  
+  
+  function loadSubdadefromCountry(){
+
+document.formularz1.flag.src= panstwa_data[document.formularz1.kontynenty.value][document.formularz1.panstwa.value][0];
+document.formularz1.lesser.src=panstwa_data[document.formularz1.kontynenty.value][document.formularz1.panstwa.value][1];
+
+document.formularz1.btn.style.backgroundImage = "url('"+panstwa_data[document.formularz1.kontynenty.value][document.formularz1.panstwa.value][0]+"')";;
+  
+  
+ 
+  }
+
+function gotowiki(){
+  window.open(wiki+panstwa_nazwy[document.formularz1.kontynenty.value][document.formularz1.panstwa.value], '_blank')
+return false;
+}
+</script>
+<script type="text/javascript">
+document.formularz1.kontynenty.options.length=kontynenty_nazwy.length;
+for (i=1; i<=kontynenty_nazwy.length; i++)
+  {document.formularz1.kontynenty.options[i-1].text=kontynenty_nazwy[i-1];
+   document.formularz1.kontynenty.options[i-1].value=i-1; 
+  }
+
+aktualizuj();  
+
+</script>
+
+
+
+
+
+
+<span>Dmytro Timofeyev &reg; 14.06.2020</span>
+</center>
+
+</body>
+</html>
